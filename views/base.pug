@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        link(rel="stylesheet", href="css/style.css")
+        title #{title}
+    body
+        block header
+            include nav
+        block content
+            h1 Content Area
+        include footer
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" crossorigin)
+        script(src="https://js.stripe.com/v3/")
+        script(src="js/frontend.js")
+

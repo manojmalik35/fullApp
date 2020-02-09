@@ -1,0 +1,8 @@
+extend base
+block content
+    h2 Name #{user.name}
+    h2 Email #{user.email}
+    h2 Photo 
+        img(src=`${user.photo}` alt="").img-size
+    .btn-parent
+        a.btn.btn-full.form-button(href='/updateUser') Update Profile

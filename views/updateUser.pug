@@ -1,0 +1,23 @@
+extend base
+block content
+    h2
+        | Update User
+    .container__parent
+        video.bg-video__content(autoplay='', muted='', loop='')
+            source(src='Avocado.mp4', type='video/mp4')
+            |         Your browser is not supported
+        form.update-user(method='POST' action=`/api/users/updateuser/${user["_id"]}` enctype='multipart/form-data')
+            .entry
+                .entry-text Name
+                input(type='text', name='name', value=`${user.name}`)
+            .entry
+                .entry-text Email
+                input(type='email', name='email', value=`${user.email}`)
+            //- .entry
+            //-     .entry-text Password
+            //-     input(type='password', name='password', value=`${user.password}`)
+            .entry
+                .entry-text Photo
+                input(type='file', name='photo')
+            .btn-parent
+                button.btn.btn-full.form-button(type='submit') Update User

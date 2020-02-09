@@ -1,0 +1,23 @@
+.signup-child
+    .signup-header
+      h3 #{plan.name}
+      .signup-pricing
+        span.pricing $#{plan.price}
+        | /month
+        p That’s only #{plan.price}$ per meal
+    .signup-features
+      ul
+        li
+          i.fas.fa-check.small-icon  
+          | 1 meal every day
+        li
+          i.fas.fa-check.small-icon  
+          | Duration #{plan.duration}
+        li
+          i.fas.fa-check.small-icon  
+          | Description #{plan.description}
+        li
+          i.fas.fa-check.small-icon  
+          | Free delivery
+      .signup-button
+        a.btn.btn-full(href=`/plans/${plan["_id"]}`) I'm hungry

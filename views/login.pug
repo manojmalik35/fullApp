@@ -1,0 +1,17 @@
+extend base
+block content
+    h2
+        | Login
+    .container__parent
+        video.bg-video__content(autoplay='', muted='', loop='')
+            source(src='Avocado.mp4', type='video/mp4')
+            |         Your browser is not supported
+        form.login
+            .entry
+                .entry-text Email
+                input(type='email', name='email', placeholder='Your email')
+            .entry
+                .entry-text Password
+                input(type='password', name='password', placeholder='Your password')
+            .btn-parent
+                button.btn.btn-full.form-button(type='submit') Login

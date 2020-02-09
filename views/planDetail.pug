@@ -1,0 +1,27 @@
+extend base
+block content
+    h2
+        | Plan Details
+    .planDetail-parent
+        include detailPlan
+        ul
+            li
+                img(height='50' src=`${plan.cover}`)
+            for picture in plan.pictures
+                li
+                    img(height='50' src=`${picture}`)
+        form.uploadPlanImages(method='POST' action=`/api/plans/${plan["_id"]}` enctype='multipart/form-data')
+            .entry
+                .entry-text Photo
+                input(type='file', name='cover')
+            .entry
+                .entry-text Photo
+                input(type='file', name='pictures')
+            .entry
+                .entry-text Photo
+                input(type='file', name='pictures')
+            .entry
+                .entry-text Photo
+                input(type='file', name='pictures')
+            .btn-parent
+                button.btn.btn-full.form-button.update-btn(type='submit' id=`${plan["_id"]}`) Upload Image

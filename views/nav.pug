@@ -1,0 +1,21 @@
+nav
+    ul.navigation
+      li.nav-line
+        a.white-anchors.active(href='') FEATURES
+      li.nav-line
+        a.white-anchors(href='') DETAILS
+      li.nav-line
+        a.white-anchors(href='') REVIEWS
+      li.nav-line
+        a.white-anchors(href='/plans') PLANS
+      if !user
+        li.nav-line
+          a.white-anchors(href='/login') LOGIN
+      li.nav-line
+        if user
+          a.white-anchors(href='/me') #{user.name}
+        else
+          a.white-anchors(href='/signup') SIGN UP
+      li.nav-line
+        if user
+          a.white-anchors(href='/logout') LOGOUT 
