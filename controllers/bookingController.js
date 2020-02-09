@@ -2,6 +2,7 @@ const planModel = require("../models/planModel");
 const userModel = require("../models/userModel")
 const bookingModel = require("../models/bookingModel")
 const SK = process.env.SK;
+const END_POINT_SECRET = process.env.END_POINT_SECRET;
 const stripe = require('stripe')(SK);
 
 module.exports.createCheckoutSession = async function (req, res) {
@@ -12,10 +13,13 @@ module.exports.createCheckoutSession = async function (req, res) {
         //2. session => npm install stripe
         const id = req.params.id;
         const plan = await planModel.findById(id);
+        const user = req.user;
+        // const userId = user["_id"];
 
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
+            customer_email : user.email,
             line_items: [{
                 name: plan.name,
                 description: plan.description,
@@ -37,12 +41,12 @@ module.exports.createCheckoutSession = async function (req, res) {
 
 }
 
-module.exports.createNewBooking = async function(req, res){
+module.exports.createNewBooking = async function(userEmail, planName){
 
-    const planId = req.body.planId;
-    const userId = req.body.userId;
-    const user = await userModel.findById(userId);
-    const plan = await planModel.findById(planId);
+    const user = await userModel.findOne({email : userEmail});
+    const plan = await planModel.findOne({name : planName});
+    const planId = plan["_id"];
+    const userId = user["_id"];
 
     const order = {
         userId : userId,
@@ -79,5 +83,25 @@ module.exports.createNewBooking = async function(req, res){
             success : "Bookings updated",
             newBooking
         })
+    }
+}
+
+module.exports.createBooking = async function(req, res){
+    const sig = req.headers['stripe-signature'];
+
+    let event;
+    const endpointSecret = END_POINT_SECRET;
+    try {
+        event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+        if(event.type == "payment_intent.succeeded"){
+            const userEmail = event.data.object.customer_email;
+            const planName = event.data.object.line_items[0].name;
+            await createNewBooking(userEmail, planName);
+            //payment complete
+            res.json({received : true});
+        }
+    }
+    catch (err) {
+        response.status(400).send(`Webhook Error: ${err.message}`);
     }
 }

@@ -61,11 +61,11 @@ if(bookPlan){
   bookPlan.addEventListener("click", async function(e){
     e.preventDefault();
     const id = bookPlan.getAttribute("id");
-    const response = await axios.get("  /api/booking/"+id);
+    const response = await axios.get("/api/booking/"+id);
     const session = response.data.session;
     // console.log(session);
     
-
+    const res = await axios.post("/api/booking/createNewBooking", {userId, planId});
     stripe.redirectToCheckout({
       // Make the id field from the Checkout Session creation API response
       // available to this file, so you can provide it as parameter here
@@ -76,7 +76,7 @@ if(bookPlan){
       // If `redirectToCheckout` fails due to a browser or network
       // error, display the localized error message to your customer
       // using `result.error.message`.
-      const res = await axios.post("/api/booking/createNewBooking", {userId, planId});
+      
     });
 
 
