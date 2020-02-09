@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-const { MAILTRAP_USERNAME, MAILTRAP_PASSWORD } = require("../configs/config")
 
 module.exports = async function (options) {
     //1. Create transport (copy code from mailtrap.io)
@@ -8,8 +7,8 @@ module.exports = async function (options) {
         host: "smtp.mailtrap.io",
         port: 2525,
         auth: {
-            user: MAILTRAP_USERNAME,
-            pass: MAILTRAP_PASSWORD
+            user: process.env.MAILTRAP_USERNAME,
+            pass: process.env.MAILTRAP_PASSWORD
         }
     });
 
