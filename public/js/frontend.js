@@ -61,7 +61,7 @@ if(bookPlan){
   bookPlan.addEventListener("click", async function(e){
     e.preventDefault();
     const id = bookPlan.getAttribute("id");
-    const response = await axios.get("/api/booking/"+id);
+    const response = await axios.get("  /api/booking/"+id);
     const session = response.data.session;
     // console.log(session);
     
@@ -71,7 +71,7 @@ if(bookPlan){
       // available to this file, so you can provide it as parameter here
       // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
       sessionId: session.id
-    }).then(function (result) {
+    }).then(async function (result) {
       console.log(result);
       // If `redirectToCheckout` fails due to a browser or network
       // error, display the localized error message to your customer
