@@ -65,7 +65,6 @@ if(bookPlan){
     const session = response.data.session;
     // console.log(session);
     
-    const res = await axios.post("/api/booking/createNewBooking", {userId, planId});
     stripe.redirectToCheckout({
       // Make the id field from the Checkout Session creation API response
       // available to this file, so you can provide it as parameter here

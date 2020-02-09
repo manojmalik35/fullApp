@@ -14,7 +14,7 @@ module.exports.createCheckoutSession = async function (req, res) {
         const id = req.params.id;
         const plan = await planModel.findById(id);
         const user = req.user;
-        // const userId = user["_id"];
+        const userId = user["_id"];
 
 
         const session = await stripe.checkout.sessions.create({
