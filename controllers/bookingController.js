@@ -88,11 +88,12 @@ module.exports.createNewBooking = async function(userEmail, planName){
 
 module.exports.createBooking = async function(req, res){
     const sig = req.headers['stripe-signature'];
-
+    
     let event;
     const endpointSecret = END_POINT_SECRET;
     try {
         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+        console.log(event.data.object);
         if(event.type == "payment_intent.succeeded"){
             const userEmail = event.data.object.customer_email;
             const planName = event.data.object.line_items[0].name;
