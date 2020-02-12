@@ -13,13 +13,14 @@ module.exports.createCheckoutSession = async function (req, res) {
         //2. session => npm install stripe
         const id = req.params.id;
         const plan = await planModel.findById(id);
-        const user = req.user;
+        const user = req.user;//agr user login hoga to protectRoute ki vajah se user aa jayga req me
         const userId = user["_id"];
 
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             customer_email : user.email,
+            client_reference_id : plan.id,
             line_items: [{
                 name: plan.name,
                 description: plan.description,
@@ -40,6 +41,8 @@ module.exports.createCheckoutSession = async function (req, res) {
     }
 
 }
+
+
 
 module.exports.createNewBooking = async function(userEmail, planName){
 
@@ -94,15 +97,16 @@ module.exports.createBooking = async function(req, res){
     try {
         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
         console.log(event.data.object);
-        if(event.type == "payment_intent.succeeded"){
-            const userEmail = event.data.object.customer_email;
-            const planName = event.data.object.line_items[0].name;
-            await createNewBooking(userEmail, planName);
-            //payment complete
-            res.json({received : true});
-        }
     }
     catch (err) {
         response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if(event.type == "checkout.session.completed"){
+        const userEmail = event.data.object.customer_email;
+        const planName = event.data.object.client_reference_id;
+        await createNewBooking(userEmail, planName);
+        //payment complete
+        res.json({received : true});
     }
 }

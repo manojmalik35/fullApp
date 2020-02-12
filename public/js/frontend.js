@@ -75,6 +75,9 @@ if (bookPlan) {
       // If `redirectToCheckout` fails due to a browser or network
       // error, display the localized error message to your customer
       // using `result.error.message`.
+      // if(result.error.message){
+        
+      // }
 
     });
 
