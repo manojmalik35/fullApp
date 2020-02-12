@@ -1,0 +1,21 @@
+nav
+    ul.navigation
+      li.nav-line
+        a.active(href='') FEATURES
+      li.nav-line
+        a(href='') DETAILS
+      li.nav-line
+        a(href='') REVIEWS
+      li.nav-line
+        a(href='/plans') PLANS
+      if !user
+        li.nav-line
+          a(href='/login') LOGIN
+      li.nav-line
+        if user
+          a(href='/me') #{user.name}
+        else
+          a(href='/signup') SIGN UP
+      li.nav-line
+        if user
+          a(href='/logout') LOGOUT
