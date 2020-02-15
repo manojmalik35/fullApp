@@ -105,6 +105,7 @@ module.exports.createBooking = async function(req, res){
     if(event.type == "checkout.session.completed"){
         const userEmail = event.data.object.customer_email;
         const planId = event.data.object.client_reference_id;
+        console.log(userEmail); console.log(planId);
         await createNewBooking(userEmail, planId);
         //payment complete
     }
