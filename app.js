@@ -8,6 +8,11 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const { createBooking } = require("./controllers/bookingController");
 
+app.use(function(req,res){
+    console.log(req.url);
+    console.log(req.method);
+    next();
+})
 app.post('/webhook-checkout', bodyParser.raw({ type: 'application/json' }), createBooking);
 app.use(express.json());//used to convert buffer to json
 
