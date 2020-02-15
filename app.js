@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const { createBooking } = require("./controllers/bookingController");
 
-app.use(function(req,res){
+app.use(function(req,res,next){
     console.log(req.url);
     console.log(req.method);
     next();
