@@ -51,19 +51,19 @@ module.exports.createNewBooking = async function(userEmail, planName){
     const planId = plan["_id"];
     const userId = user["_id"];
 
-    const order = {
-        userId : userId,
-        bookedPlans : [
-            {
-                planId : planId,
-                name : plan.name,
-                currentPrice : plan.price
-            }
-        ]
-    }
-
     if(user.userBookingsId == undefined){//New user
 
+        const order = {
+            userId : userId,
+            bookedPlans : [
+                {
+                    planId : planId,
+                    name : plan.name,
+                    currentPrice : plan.price
+                }
+            ]
+        }
+        
         const newOrder = await bookingModel.create(order);
         user.userBookingsId = newOrder["_id"];
         await user.save({validateBeforeSave : false});

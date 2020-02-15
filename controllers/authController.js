@@ -90,7 +90,7 @@ module.exports.protectRoute = async function (req, res, next) {
             // console.log(result);
             if(ans){
                 const user = await userModel.findById(ans.id);
-                // req.user = user;
+                req.user = user;
                 next();
             }else
                 res.json({ data: "Your token is tampered" });
