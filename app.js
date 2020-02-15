@@ -27,10 +27,10 @@ app.use("/api/plans", planRouter);
 app.use("/api/users", userRouter);
 app.use("/api/booking", bookingRouter);
 
-app.use(function (req, res, next) {
-    console.log(req.cookies);
-    next();
-})
+// app.use(function (req, res, next) {
+//     console.log(req.cookies);
+//     next();
+// })
 //users
 
 var port = process.env.PORT || 3000;

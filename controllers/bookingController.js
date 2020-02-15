@@ -33,7 +33,7 @@ module.exports.createCheckoutSession = async function (req, res) {
         });
 
         res.json({
-            session
+            session, userId
         })
     } catch (err) {
         console.log(err)
