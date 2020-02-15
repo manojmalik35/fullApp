@@ -48,7 +48,7 @@ module.exports.createNewBooking = async function(userEmail, planId){
 
     const user = await userModel.findOne({email : userEmail});
     const plan = await planModel.findById(planId);
-    const planId = plan["_id"];
+    // const planId = plan["_id"];
     const userId = user["_id"];
 
     if(user.userBookingsId == undefined){//New user
@@ -107,6 +107,6 @@ module.exports.createBooking = async function(req, res){
         const planId = event.data.object.client_reference_id;
         await createNewBooking(userEmail, planId);
         //payment complete
-        res.json({received : true});
     }
+    res.json({received : true});
 }
