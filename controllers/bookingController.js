@@ -44,10 +44,10 @@ module.exports.createCheckoutSession = async function (req, res) {
 
 
 
-module.exports.createNewBooking = async function(userEmail, planName){
+module.exports.createNewBooking = async function(userEmail, planId){
 
     const user = await userModel.findOne({email : userEmail});
-    const plan = await planModel.findOne({name : planName});
+    const plan = await planModel.findById(planId);
     const planId = plan["_id"];
     const userId = user["_id"];
 
@@ -63,7 +63,7 @@ module.exports.createNewBooking = async function(userEmail, planName){
                 }
             ]
         }
-        
+
         const newOrder = await bookingModel.create(order);
         user.userBookingsId = newOrder["_id"];
         await user.save({validateBeforeSave : false});
@@ -96,16 +96,16 @@ module.exports.createBooking = async function(req, res){
     const endpointSecret = END_POINT_SECRET;
     try {
         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-        console.log(event.data.object);
+        // console.log(event.data.object);
     }
     catch (err) {
-        response.status(400).send(`Webhook Error: ${err.message}`);
+        return response.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     if(event.type == "checkout.session.completed"){
         const userEmail = event.data.object.customer_email;
-        const planName = event.data.object.client_reference_id;
-        await createNewBooking(userEmail, planName);
+        const planId = event.data.object.client_reference_id;
+        await createNewBooking(userEmail, planId);
         //payment complete
         res.json({received : true});
     }
