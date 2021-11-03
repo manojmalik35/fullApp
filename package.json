@@ -20,6 +20,6 @@
     "nodemailer": "^6.4.2",
     "pug": "^2.0.4",
     "stripe": "^8.12.0",
-    "validator": "^12.1.0"
+    "validator": "^13.7.0"
   }
 }
